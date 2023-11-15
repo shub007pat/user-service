@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  user-db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: 'user_db'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'password'
+    ports:
+      - "3307:3306"
+    volumes:
+      - user-db-data:/var/lib/mysql
+  user-service:
+    build: ./path/to/user-service
+    depends_on:
+      - user-db
+    ports:
+      - "8001:80"
+    environment:
+      DB_HOST: user-db
+      DB_NAME: user_db
+      DB_USER: user
+      DB_PASS: root
+volumes:
+  user-db-data:
