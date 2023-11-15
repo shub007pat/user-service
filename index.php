@@ -21,12 +21,12 @@ $request = explode('/', trim($path, '/'));
 // Connect to the database
 $db = new Database();
 
-if ($method === 'POST' && $request[1] === 'users') {
+if ($method === 'POST' && $request[0] === 'users') {
     // Add a new user
     $input = json_decode(file_get_contents('php://input'), true);
     $user_id = $db->addUser($input);
     echo json_encode(array('user_id' => $user_id));
-} elseif ($method === 'POST' && $request[1] === 'login') {
+} elseif ($method === 'POST' && $request[0] === 'login') {
     // User login
     $input = json_decode(file_get_contents('php://input'), true);
     $user = $db->loginUser($input);
@@ -35,7 +35,7 @@ if ($method === 'POST' && $request[1] === 'users') {
     } else {
         echo json_encode(array('message' => 'Login failed'));
     }
-} elseif ($method === 'GET' && $request[1] === 'users') {
+} elseif ($method === 'GET' && $request[0] === 'users') {
     // To get the user details, pass the id as a query parameter
     $id = isset($_GET['id']) ? $_GET['id'] : null;
     
